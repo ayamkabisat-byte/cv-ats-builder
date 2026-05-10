@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   PRINT STYLES
+   ============================================
+   Browser modern (Chrome, Edge) by default tidak print background-color
+   demi hemat tinta. Untuk CV dengan sidebar gelap, kita harus paksa
+   browser untuk print color adjustment di SEMUA elemen.
+   ---------------------------------------------- */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0mm;
+  }
+
+  /* Wajib untuk Chrome, Safari, dan Edge */
+  html,
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force ke semua child agar background-color, gradient, dan border
+     dengan warna kustom ter-print apa adanya. */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Target eksplisit untuk sidebar Creative — defense-in-depth
+     karena beberapa browser kadang abaikan rule global. */
+  .creative-sidebar {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
