@@ -59,7 +59,7 @@ export default function InsightsPanel({ data, update }) {
           <div className="h-2 rounded-full bg-slate-100 overflow-hidden"><div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${ats.score}%` }} /></div>
           <div className="grid grid-cols-4 gap-1 mt-2 text-center">
             {[
-              ['Identity', ats.parts.identity, 25], ['Content', ats.parts.content, 45], ['Impact', ats.parts.impact, 15], ['Format', ats.parts.format, 10],
+              ['Identity', ats.parts.identity, 25], ['Content', ats.parts.content, 45], ['Impact', ats.parts.impact, 15], ['Format', ats.parts.format, 15],
             ].map(([name, value, max]) => (
               <div key={name} className="rounded-lg bg-slate-50 border border-slate-100 py-2 px-1">
                 <div className="text-xs font-bold text-slate-800">{value}/{max}</div>
