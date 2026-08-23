@@ -1,34 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
 
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function deepMerge(base, incoming) {
+  if (!isPlainObject(base) || !isPlainObject(incoming)) return incoming ?? base;
+  const out = { ...base };
+  Object.keys(incoming).forEach((key) => {
+    if (isPlainObject(base[key]) && isPlainObject(incoming[key])) out[key] = deepMerge(base[key], incoming[key]);
+    else out[key] = incoming[key];
+  });
+  return out;
+}
+
 /**
- * Custom hook untuk mempersist state ke localStorage.
- *
- * - Saat mount: baca dari localStorage, fallback ke initialValue jika belum ada / corrupt.
- * - Saat value berubah: tulis ke localStorage (debounced 300ms agar tidak thrashing
- *   saat user mengetik di textarea).
- * - Aman dari quota exceeded & access errors (mis. private mode Safari).
- *
- * Catatan: hanya gunakan untuk data yang serializable (JSON-safe).
+ * Persistent local state with:
+ * - debounced writes
+ * - deep merge against defaults, so nested new fields survive migration
+ * - optional legacy storage keys (first valid match wins)
  */
-export function useLocalStorage(key, initialValue) {
+export function useLocalStorage(key, initialValue, legacyKeys = []) {
   const [value, setValue] = useState(() => {
     if (typeof window === 'undefined') return initialValue;
     try {
-      const stored = window.localStorage.getItem(key);
-      if (stored === null) return initialValue;
-      const parsed = JSON.parse(stored);
-      // Merge dengan initialValue agar field baru di defaults tidak hilang
-      // saat user punya cache versi lama dengan shape lebih kecil.
-      if (
-        parsed &&
-        typeof parsed === 'object' &&
-        !Array.isArray(parsed) &&
-        initialValue &&
-        typeof initialValue === 'object'
-      ) {
-        return { ...initialValue, ...parsed };
+      const candidates = [key, ...legacyKeys];
+      for (const candidate of candidates) {
+        const stored = window.localStorage.getItem(candidate);
+        if (stored === null) continue;
+        const parsed = JSON.parse(stored);
+        return isPlainObject(initialValue) && isPlainObject(parsed)
+          ? deepMerge(initialValue, parsed)
+          : parsed;
       }
-      return parsed;
+      return initialValue;
     } catch (err) {
       console.warn(`useLocalStorage: gagal membaca "${key}", pakai default.`, err);
       return initialValue;
@@ -45,7 +50,6 @@ export function useLocalStorage(key, initialValue) {
       try {
         window.localStorage.setItem(key, JSON.stringify(value));
       } catch (err) {
-        // Quota exceeded, private mode, dsb. Tidak fatal — state masih hidup di memory.
         console.warn(`useLocalStorage: gagal menulis "${key}".`, err);
       }
     }, 300);

@@ -2,6 +2,21 @@
 // Setiap palet mengontrol sidebar, badge, divider, timeline, dan accent color.
 
 export const colorPalettes = {
+  executive: {
+    name: 'Executive Navy',
+    preview: 'bg-[#1d3557]',
+    sidebarBg: 'bg-[#132238]',
+    sidebarBorderRight: 'border-[#4f7cac]',
+    iconContact: 'text-[#8db4d8]',
+    sectionTitleLeft: 'text-[#b9d4ec]',
+    skillBadge: 'bg-[#1d3557] border-[#355979] text-slate-100',
+    iconMain: 'text-[#315f86]',
+    dividerBg: 'bg-slate-200',
+    dividerFill: 'bg-[#315f86]',
+    timelineBorder: 'border-[#c7d7e5]',
+    timelineDot: 'bg-[#315f86]',
+    textAccent: 'text-[#315f86]',
+  },
   blue: {
     name: 'Classic Blue',
     preview: 'bg-blue-600',
@@ -16,6 +31,36 @@ export const colorPalettes = {
     timelineBorder: 'border-blue-200',
     timelineDot: 'bg-blue-600',
     textAccent: 'text-blue-600',
+  },
+  teal: {
+    name: 'Teal Professional',
+    preview: 'bg-teal-700',
+    sidebarBg: 'bg-[#123b3d]',
+    sidebarBorderRight: 'border-teal-500',
+    iconContact: 'text-teal-300',
+    sectionTitleLeft: 'text-teal-200',
+    skillBadge: 'bg-teal-900 border-teal-700 text-teal-50',
+    iconMain: 'text-teal-700',
+    dividerBg: 'bg-teal-100',
+    dividerFill: 'bg-teal-700',
+    timelineBorder: 'border-teal-200',
+    timelineDot: 'bg-teal-700',
+    textAccent: 'text-teal-700',
+  },
+  sandstone: {
+    name: 'Sandstone',
+    preview: 'bg-[#9a7651]',
+    sidebarBg: 'bg-[#46382c]',
+    sidebarBorderRight: 'border-[#c9a578]',
+    iconContact: 'text-[#e7cda7]',
+    sectionTitleLeft: 'text-[#f0dcc0]',
+    skillBadge: 'bg-[#5a4939] border-[#75604b] text-stone-100',
+    iconMain: 'text-[#8b6b4b]',
+    dividerBg: 'bg-stone-200',
+    dividerFill: 'bg-[#9a7651]',
+    timelineBorder: 'border-stone-300',
+    timelineDot: 'bg-[#9a7651]',
+    textAccent: 'text-[#7a5b3f]',
   },
   monochrome: {
     name: 'Monochrome',
@@ -77,8 +122,6 @@ export const colorPalettes = {
     timelineDot: 'bg-indigo-500',
     textAccent: 'text-indigo-600',
   },
-  // FIX: Sebelumnya sidebar pakai violet (#4c1d95) tapi nama "Rose Gold" — tidak konsisten.
-  // Sekarang dipindah ke rose-900 (#881337) agar palet benar-benar bertema mawar.
   rose: {
     name: 'Rose Gold',
     preview: 'bg-rose-400',
