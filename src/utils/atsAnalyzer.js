@@ -69,7 +69,7 @@ export function analyzeATS(data) {
   } else suggestions.push('Tambahkan achievement bullets pada pengalaman/proyek.');
 
   const atsFriendly = data.template === 'ats' || data.template === 'ats-modern';
-  scoreParts.format = atsFriendly ? 10 : 6;
+  scoreParts.format = atsFriendly ? 15 : 8;
   if (!atsFriendly) suggestions.push('Untuk lamaran yang sangat ATS-sensitive, gunakan template ATS Classic atau ATS Modern.');
 
   const score = Math.min(100, Object.values(scoreParts).reduce((a, b) => a + b, 0));
